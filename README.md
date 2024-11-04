@@ -20,3 +20,9 @@ https://github.com/kisland291/241104/releases/tag/241104
 
 需要逐幀截圖的人
 不需使用ffmpeg的輕量化版本
+
+
+# 示範影片
+
+
+[_vp9_預設大小1104_170433_15056.webm](https://github.com/user-attachments/assets/941dcde3-5b2a-40b7-aec3-badf17b9be4a)
