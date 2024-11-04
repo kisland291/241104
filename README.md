@@ -1,6 +1,8 @@
 # 241104
 逐幀截圖的草稿文件
 
-概要圖
+不需連網的逐幀截圖功能
 
-![333](https://github.com/user-attachments/assets/0bf82bac-c4e9-442c-a0e2-ddcdff0d6fb5)
+概要與說明
+
+![33333336](https://github.com/user-attachments/assets/ae2911f9-ff8d-47c9-96e5-45496eae3f7a)
