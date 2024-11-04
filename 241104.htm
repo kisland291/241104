@@ -70,13 +70,12 @@ function poi(){
 
   //加載資源的行為
   $('#input_video').on('loadstart', function(e){
-    console.log( 'loadstart' );
-	
+    //console.log( 'loadstart' );
   });
    
   
   $('#input_video').on('loadeddata', function(e){
-    console.log( 'loadeddata' );
+    //console.log( 'loadeddata' );
     //var aa = $(this);
 	//console.log( this.videoHeight,this.videoWidth );
 	//讓 canvas長寬=影片長寬
@@ -98,7 +97,7 @@ return 123;
 }//poi
 
 function poi時間軸(){
-  console.log( 'poi時間軸' );
+  //console.log( 'poi時間軸' );
   var aa=$("#input_range");
   //console.log( aa );
   aa.on("input", function(e) {
@@ -106,7 +105,12 @@ function poi時間軸(){
 	//console.log( aa.prop('value') );
     $('#input_range2').text( aa.prop('value') );
 	var vid = document.getElementById("input_video");
-	vid.currentTime= vid.duration * (  aa.prop('value') /100);//影片的時間位置
+	//console.log( vid );
+	//console.log( vid.readyState );
+	if( vid.readyState >0 ){
+	  vid.currentTime= vid.duration * (  aa.prop('value') /100);//影片的時間位置
+	}
+	
   });
 }//poi時間軸
 
@@ -177,7 +181,7 @@ function poi時間軸3(){
 
 
 function poi縮放(){
-  console.log( 'poi縮放' );	
+  //console.log( 'poi縮放' );	
   if( ! $('#input_video').prop('poi241104z') ){
     $('#input_video').prop('poi241104z','400');
   }
@@ -188,7 +192,7 @@ function poi縮放(){
 	FFF=$('#input_video').prop('poi241104z');
 	FFF=parseInt(FFF);
 	FFF=FFF+100;
-	console.log(FFF);
+	//console.log(FFF);
 	$('#input_video').prop('poi241104z', FFF );
 	$('#input_video').css({
 	  'max-width':FFF+'px',
@@ -204,7 +208,7 @@ function poi縮放(){
 	FFF=$('#input_video').prop('poi241104z');
 	FFF=parseInt(FFF);
 	FFF=FFF-100;
-	console.log(FFF);
+	//console.log(FFF);
 	$('#input_video').prop('poi241104z', FFF );
 	$('#input_video').css({
 	  'max-width':FFF+'px',
@@ -232,7 +236,7 @@ function poi幀數步輻(){
   //console.log( aa );
   aa.each(function(){
     $(this).on('click',function(e){
-	  console.log(this.textContent);
+	  //console.log(this.textContent);
 	  $('#poi241104box1431').text(this.textContent);
 	}); 
   });
