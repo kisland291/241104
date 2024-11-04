@@ -1,0 +1,387 @@
+<html>
+  <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+$(document).ready(function(){
+  console.log('document.ready');
+  poi();
+  
+	poi時間軸();//時間軸
+	poi時間軸2();//時間軸
+	poi時間軸3();//時間軸
+	poi縮放();//時間軸
+	poi秒數步輻();//秒數步輻
+	poi幀數步輻();//幀數步輻
+	poi存成圖片();
+});
+
+
+
+function poi(){
+  console.log('poi');
+  var canvas = document.getElementById("input_canvas");
+  //console.log( canvas );
+  var ctx = canvas.getContext("2d");
+  //console.log( ctx );
+  var vid = document.getElementById("input_video");
+  //console.log( vid );
+  var aa=$("#input_button");
+  //console.log( aa );
+  
+  
+  //選檔案
+  $('#input_file').on("change", function(){ 
+    console.log('change');
+	var aa=$(this).prop('files');
+	if(aa.length >0){
+	  aa= URL.createObjectURL(aa[0]);//取得選擇的檔案
+	}else{
+	  return;
+	}
+	
+	//
+
+	//
+    $('#input_video').prop('src',  aa );//video載入影片
+    vid.play();//播放影片
+  });
+
+  //點擊按鈕 載入影片
+  $("#input_button").on('click',function(e){
+    console.log('click');
+    var aa=$('#input_file');
+    //console.log( aa );
+    var aa1=aa.prop('files');
+    //console.log( aa1[0] );
+	if(aa1.length >0){
+	  var bb= URL.createObjectURL(aa1[0]);//取得選擇的檔案
+	}else{
+	  console.log( '沒有檔案' );
+	  return;
+	}
+	//
+
+	//
+    $('#input_video').prop('src',  bb );//video載入影片
+
+    vid.play();//播放影片
+  });//click
+
+  //加載資源的行為
+  $('#input_video').on('loadstart', function(e){
+    console.log( 'loadstart' );
+	
+  });
+   
+  
+  $('#input_video').on('loadeddata', function(e){
+    console.log( 'loadeddata' );
+    //var aa = $(this);
+	//console.log( this.videoHeight,this.videoWidth );
+	//讓 canvas長寬=影片長寬
+    canvas.width = vid.videoWidth;
+    canvas.height = vid.videoHeight;
+	//console.log( $(vid) );
+	
+    drawVideo();//繪製canvas
+	
+  });//loadeddata
+  
+  function drawVideo(){
+	ctx.drawImage(vid,0,0,canvas.width,canvas.height);
+	$('#input_video2').text( vid.currentTime +'/'+ vid.duration );
+	requestAnimationFrame(drawVideo);//由瀏覽器控制FPS
+  }//drawVideo()
+
+return 123;
+}//poi
+
+function poi時間軸(){
+  console.log( 'poi時間軸' );
+  var aa=$("#input_range");
+  //console.log( aa );
+  aa.on("input", function(e) {
+    //console.log( aa );
+	//console.log( aa.prop('value') );
+    $('#input_range2').text( aa.prop('value') );
+	var vid = document.getElementById("input_video");
+	vid.currentTime= vid.duration * (  aa.prop('value') /100);//影片的時間位置
+  });
+}//poi時間軸
+
+function poi時間軸2(){
+  //秒數步輻
+  var vid = document.getElementById("input_video");
+  var FFF=0;
+  $('poi#poi241104fastleft').off();
+  $('poi#poi241104fastleft').on('click',function(e){
+    //console.log('click1');
+    var aa=$('#poi241104box1432').text();
+	aa=parseInt(aa);
+    //console.log( aa );
+
+    FFF=vid.currentTime-aa;
+    vid.currentTime=FFF;
+    //console.log( vid.currentTime );	
+
+  });//click
+  //
+  $('poi#poi241104fastright').off();
+  $('poi#poi241104fastright').on('click',function(e){
+    //console.log('click2');
+    var aa=$('#poi241104box1432').text();
+	aa=parseInt(aa);
+    //console.log( aa );
+
+    FFF=vid.currentTime+aa;
+    vid.currentTime=FFF;
+    //console.log( vid.currentTime );	
+
+  });//click
+  //
+}//poi時間軸2()
+
+function poi時間軸3(){
+  //幀數步輻
+  var vid = document.getElementById("input_video");
+  var FFF=0;
+  //
+  $('poi#poi241104left').off();
+  $('poi#poi241104left').on('click',function(e){
+    //console.log('click1');
+    var aa=$('#poi241104box1431').text();
+	aa=parseInt(aa);
+	aa=(1/aa);
+	//console.log( aa );
+	//
+    FFF=vid.currentTime- aa;
+    vid.currentTime=FFF;
+    //console.log( vid.currentTime );	
+  });//click
+  //
+  $('poi#poi241104right').off();
+  $('poi#poi241104right').on('click',function(e){
+    //console.log('click2');
+    var aa=$('#poi241104box1431').text();
+	aa=parseInt(aa);
+	aa=(1/aa);
+	//console.log( aa );
+	//
+	FFF=vid.currentTime+aa;
+    vid.currentTime=FFF;
+    //console.log( vid.currentTime );	
+  });//click
+
+}//poi時間軸3(){
+
+
+function poi縮放(){
+  console.log( 'poi縮放' );	
+  if( ! $('#input_video').prop('poi241104z') ){
+    $('#input_video').prop('poi241104z','400');
+  }
+  var FFF=0;
+  $('poi#poi241104plus').off();
+  $('poi#poi241104plus').on('click',function(e){
+    console.log('click1');
+	FFF=$('#input_video').prop('poi241104z');
+	FFF=parseInt(FFF);
+	FFF=FFF+100;
+	console.log(FFF);
+	$('#input_video').prop('poi241104z', FFF );
+	$('#input_video').css({
+	  'max-width':FFF+'px',
+	  'max-height':FFF+'px',
+	});
+	$('#poi241104box1429').text( FFF );
+	
+	
+  });//click
+  $('poi#poi241104minus').off();
+  $('poi#poi241104minus').on('click',function(e){
+    console.log('click2');
+	FFF=$('#input_video').prop('poi241104z');
+	FFF=parseInt(FFF);
+	FFF=FFF-100;
+	console.log(FFF);
+	$('#input_video').prop('poi241104z', FFF );
+	$('#input_video').css({
+	  'max-width':FFF+'px',
+	  'max-height':FFF+'px',
+	});
+	$('#poi241104box1429').text( FFF );
+
+  });//click
+}//poi縮放()
+
+function poi秒數步輻(){
+  var aa=$('#poi241104box1435a > button');
+  //console.log( aa );
+  aa.each(function(){
+    $(this).on('click',function(e){
+	  //console.log(this.textContent);
+	  $('#poi241104box1432').text(this.textContent);
+	}); 
+  });
+}//poi秒數步輻()
+
+
+function poi幀數步輻(){
+  var aa=$('#poi241104box1435b > button');
+  //console.log( aa );
+  aa.each(function(){
+    $(this).on('click',function(e){
+	  console.log(this.textContent);
+	  $('#poi241104box1431').text(this.textContent);
+	}); 
+  });
+}//poi幀數步輻()
+
+function poi存成圖片(){
+  var aa=$('#poi241104box1527 > button');
+  //console.log( aa );
+  aa.each(function(){
+    $(this).on('click',function(e){
+	  //console.log(this.textContent);
+	  var bb=$(this).data();
+	  console.log( bb.type );
+	  if( bb.type =='jpg'){
+	    var xx=$('a#poi241104a1541');
+		//console.log( xx,xx[0] );
+        var canvas = document.getElementById("input_canvas");
+        var vid = document.getElementById("input_video");
+		xx[0].href=canvas.toDataURL("image/jpeg", 0.92);
+		var t1 = new Date().getTime();
+        var t2 = Math.floor(vid.currentTime); 
+		xx[0].download=t1+"YouTube"+t2+".jpg";
+		xx[0].click();
+	  }//jpg
+	  if( bb.type =='png'){
+	    var xx=$('a#poi241104a1541');
+		//console.log( xx,xx[0] );
+        var canvas = document.getElementById("input_canvas");
+        var vid = document.getElementById("input_video");
+		xx[0].href=canvas.toDataURL("image/png");
+		var t1 = new Date().getTime();
+        var t2 = Math.floor(vid.currentTime); 
+		xx[0].download=t1+"YouTube"+t2+".png";
+		xx[0].click();
+	  }//png
+
+
+	  
+	  
+	}); 
+  });
+}
+
+
+/*
+https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Manipulating_video_using_canvas
+Math.floor(vid.currentTime)
+*/
+    </script>
+    <style>
+video {
+  border: 1px solid blue;
+  float: left;
+}
+canvas {
+  border: 1px solid blue;
+}
+#poi241104plus,#poi241104minus{
+  font-size:5vw;
+}
+#poi241104fastleft,#poi241104fastright {
+  font-size:5vw;
+}
+
+#poi241104left,#poi241104right {
+  font-size:5vw;
+}
+
+#input_file,#input_button {
+  font-size:2vw;
+}
+
+#poi241104a1515 {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  top: 0px;
+  right: 0px;
+
+}
+
+    </style>
+</head>
+<body>
+
+<input type="file" id="input_file" >
+<input type="button" id="input_button" value="載入">
+<br/>
+
+<video id="input_video" style="width:auto;height:auto;" controls preload="metadata"  >
+</video>
+<poi id="input_video2">input_video</poi>
+<br/>
+
+
+
+
+<div id="poi241104a1515">
+
+<poi id="poi241104plus">➕</poi>
+<poi id="poi241104minus">➖</poi>
+<poi id="poi241104box1429">400</poi>
+縮放
+<br/>
+<poi id="poi241104fastleft">⏪</poi>
+<poi id="poi241104fastright">⏩</poi>
+<poi id="poi241104box1432">1</poi>
+秒
+<br/>
+<poi id="poi241104box1435a">
+<button>1</button><button>5</button><button>10</button><button>30</button><button>60</button><br/>
+</poi>
+<br/>
+<poi id="poi241104left">◀️</poi>
+<poi id="poi241104right">▶️</poi>
+<poi id="poi241104box1431">25</poi>
+FPS
+<br/>
+<poi id="poi241104box1435b">
+<button>25</button><button>24.97</button><br/>
+<button>30</button><button>29.97</button><br/>
+<button>50</button><button>49.95</button><br/>
+<button>60</button><button>59.94</button><br/>
+</poi>
+<br/>
+
+
+<input id="input_range" type="range" min="0" max="100" value="0" list="tickmarks" />
+<poi id="input_range2">input_range</poi>
+<datalist id="tickmarks">
+  <option value="0"></option>
+  <option value="25"></option>
+  <option value="50"></option>
+  <option value="75"></option>
+  <option value="100"></option>
+</datalist>
+
+
+<br>
+<canvas id="input_canvas" style="max-width:120px;max-height:120px; width:auto;height:auto;"></canvas>
+
+<poi id="poi241104box1527">
+<button data-type='png'>存PNG</button><button data-type='jpg'>存JPG</button><br/>
+<a id="poi241104a1541"></a> F11=全螢幕
+</poi>
+
+<br>
+</div>
+
+
+</body>
+</html>
