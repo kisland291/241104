@@ -81,6 +81,7 @@ function poi(){
 	//讓 canvas長寬=影片長寬
     canvas.width = vid.videoWidth;
     canvas.height = vid.videoHeight;
+	$('#poi241110box').text(vid.videoWidth+'x'+vid.videoHeight);
 	//console.log( $(vid) );
 	
     drawVideo();//繪製canvas
@@ -311,8 +312,7 @@ canvas {
 
 #poi241104a1515 {
   position: absolute;
-  width: 500px;
-  height: 300px;
+
   top: 0px;
   right: 0px;
 
@@ -340,6 +340,10 @@ canvas {
 <poi id="poi241104minus">➖</poi>
 <poi id="poi241104box1429">400</poi>
 縮放
+<br/>
+<poi id="poi241110box">
+
+</poi>
 <br/>
 <poi id="poi241104fastleft">⏪</poi>
 <poi id="poi241104fastright">⏩</poi>
