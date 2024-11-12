@@ -14,6 +14,7 @@ $(document).ready(function(){
 	poi秒數步輻();//秒數步輻
 	poi幀數步輻();//幀數步輻
 	poi存成圖片();
+	poi播放速度();
 });
 
 
@@ -70,12 +71,15 @@ function poi(){
 
   //加載資源的行為
   $('#input_video').on('loadstart', function(e){
-    //console.log( 'loadstart' );
+    console.log( 'loadstart' );
+	var aa=$(this)[0].playbackRate;
+	console.log( aa );
+	$('#poi241111box1a').text( aa );
   });
    
   
   $('#input_video').on('loadeddata', function(e){
-    //console.log( 'loadeddata' );
+    console.log( 'loadeddata' );
     //var aa = $(this);
 	//console.log( this.videoHeight,this.videoWidth );
 	//讓 canvas長寬=影片長寬
@@ -243,6 +247,25 @@ function poi幀數步輻(){
   });
 }//poi幀數步輻()
 
+function poi播放速度(){
+console.log( 'poi播放速度' );
+  var aa=$('#poi241111box2 > button');
+  //console.log( aa );
+  var FFF='';
+  aa.each(function(){
+    $(this).on('click',function(e){
+	  //console.log(this.textContent);
+	  FFF=eval(this.textContent);
+	  $('#poi241111box1a').text( FFF );
+      var vv=$('#input_video');
+	  //console.log( vv[0] );
+	  vv[0].playbackRate= FFF ;
+	  console.log( vv[0].playbackRate );
+
+	}); 
+  });
+}//poi幀數步輻()
+
 function poi存成圖片(){
   var aa=$('#poi241104box1527 > button');
   //console.log( aa );
@@ -306,6 +329,10 @@ canvas {
   font-size:5vw;
 }
 
+#poi241111box1 {
+  font-size:2vw;
+}
+
 #input_file,#input_button {
   font-size:2vw;
 }
@@ -367,6 +394,19 @@ FPS
 </poi>
 <br/>
 
+<poi id="poi241111box1">
+<poi id="poi241111box1a">1</poi>
+x,播放速度
+</poi>
+<br/>
+<poi id="poi241111box2">
+<button>1.0</button><br/>
+<button>2.0</button><button>1/2</button><br/>
+<button>4.0</button><button>1/4</button><br/>
+<button>8.0</button><button>1/8</button><br/>
+
+</poi>
+<br/>
 
 <input id="input_range" type="range" min="0" max="100" value="0" list="tickmarks" />
 <poi id="input_range2">input_range</poi>
@@ -377,6 +417,9 @@ FPS
   <option value="75"></option>
   <option value="100"></option>
 </datalist>
+
+
+
 
 
 <br>
