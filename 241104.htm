@@ -80,6 +80,24 @@ function poi(){
   
   $('#input_video').on('loadeddata', function(e){
     console.log( 'loadeddata' );
+	
+/*
+    //var aa = $(this);
+	//console.log( this.videoHeight,this.videoWidth );
+	//讓 canvas長寬=影片長寬
+    canvas.width = vid.videoWidth;
+    canvas.height = vid.videoHeight;
+	$('#poi241110box').text(vid.videoWidth+'x'+vid.videoHeight);
+	//console.log( $(vid) );
+	
+    drawVideo();//繪製canvas
+
+*/
+	
+  });//loadeddata
+  //
+  $('#input_video').on('playing', function () {
+    console.log( 'playing');
     //var aa = $(this);
 	//console.log( this.videoHeight,this.videoWidth );
 	//讓 canvas長寬=影片長寬
@@ -90,11 +108,29 @@ function poi(){
 	
     drawVideo();//繪製canvas
 	
-  });//loadeddata
+	
+  });
+  //
+  $('#input_video').on('progress', function () {
+    console.log( 'progress');
+  });
+  //
+  $('#input_video').on('timeupdate', function () {
+    //console.log( 'timeupdate');
+	//console.log( this );
+	//console.log( this.ended ,this.paused , this.readyState  );
+  });
+
   
   function drawVideo(){
+    //console.log( 'drawVideo' );
 	ctx.drawImage(vid,0,0,canvas.width,canvas.height);
-	$('#input_video2').text( vid.currentTime +'/'+ vid.duration );
+	$('#input_video2').text( vid.currentTime +'/'+ vid.duration );//時間軸
+	var aa=$('#input_video');
+	//console.log( aa[0].readyState  );
+	//console.log( aa[0].ended ,aa[0].paused , aa[0].readyState  );
+    //if(aa[0].ended){console.log( 'ended' );return;}
+	//if(aa[0].paused){console.log( 'paused' );return;}
 	requestAnimationFrame(drawVideo);//由瀏覽器控制FPS
   }//drawVideo()
 
@@ -248,7 +284,7 @@ function poi幀數步輻(){
 }//poi幀數步輻()
 
 function poi播放速度(){
-console.log( 'poi播放速度' );
+  //console.log( 'poi播放速度' );
   var aa=$('#poi241111box2 > button');
   //console.log( aa );
   var FFF='';
