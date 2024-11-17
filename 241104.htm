@@ -1,12 +1,59 @@
 <html>
   <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <script>
-$(document).ready(function(){
-  console.log('document.ready');
-  poi();
+
   
+    <script>
+	
+window.addEventListener("load", function(event) { //太早
+    console.log("All resources finished loading!");
+});
+document.addEventListener("DOMContentLoaded", function(event) {
+    console.log( 'DOMContentLoaded' );
+	poi241117a讀取js();//讀取js
+});
+
+
+
+
+
+function poi241117a讀取js(){
+  var script = document.createElement('script');
+  script.src = 'https://code.jquery.com/jquery-3.7.1.slim.min.jsp';
+  document.head.appendChild(script);
+  //
+  script.onload = function () {
+    console.log('script.onload');
+    poi();
+  };
+  script.onerror = function () {
+    console.log('script.onerror1');
+	poi241117b讀取js();
+  }
+
+}//poi241117()
+function poi241117b讀取js(){
+  var script = document.createElement('script');
+  script.src = 'jquery-3.7.1.slim.min.js';
+  document.head.appendChild(script);
+  script.onload = function () {
+    console.log('script.onload');
+	poi241117事前準備();
+  };
+  script.onerror = function () {
+    console.log('script.onerror2');
+  }
+  
+}//poi241117b()
+
+
+function poi241117事前準備(){
+  //console.log('poi241117事前準備');
+  //
+  $(document).ready(function(){
+    console.log('$(document).ready');
+    poi();  
+	
 	poi時間軸();//時間軸
 	poi時間軸2();//時間軸
 	poi時間軸3();//時間軸
@@ -15,17 +62,24 @@ $(document).ready(function(){
 	poi幀數步輻();//幀數步輻
 	poi存成圖片();
 	poi播放速度();
-});
 
+
+  });
+
+}//poi241117事前準備()
 
 
 function poi(){
   console.log('poi');
+  //
+  var FFF='';
   var canvas = document.getElementById("input_canvas");
   //console.log( canvas );
   var ctx = canvas.getContext("2d");
   //console.log( ctx );
   var vid = document.getElementById("input_video");
+  var vv=$("#input_video");
+  if(vv.length==0){return;}
   //console.log( vid );
   var aa=$("#input_button");
   //console.log( aa );
@@ -72,27 +126,20 @@ function poi(){
   //加載資源的行為
   $('#input_video').on('loadstart', function(e){
     console.log( 'loadstart' );
-	var aa=$(this)[0].playbackRate;
-	console.log( aa );
-	$('#poi241111box1a').text( aa );
+	
   });
    
   
   $('#input_video').on('loadeddata', function(e){
     console.log( 'loadeddata' );
+	//
+	var aa=$(this)[0].playbackRate;//播放速度
+	//console.log( aa );
+	$('#poi241111box1a').text( aa );
+	FFF='';
+	FFF=Number.parseFloat(vid.duration).toFixed(3);
+	$('#input_video2b').text( FFF );//影片總時間
 	
-/*
-    //var aa = $(this);
-	//console.log( this.videoHeight,this.videoWidth );
-	//讓 canvas長寬=影片長寬
-    canvas.width = vid.videoWidth;
-    canvas.height = vid.videoHeight;
-	$('#poi241110box').text(vid.videoWidth+'x'+vid.videoHeight);
-	//console.log( $(vid) );
-	
-    drawVideo();//繪製canvas
-
-*/
 	
   });//loadeddata
   //
@@ -105,7 +152,9 @@ function poi(){
     canvas.height = vid.videoHeight;
 	$('#poi241110box').text(vid.videoWidth+'x'+vid.videoHeight);
 	//console.log( $(vid) );
-	
+	//var vv=$(this);
+	//console.log( vv );
+	//if(vv.length==0){return;}
     drawVideo();//繪製canvas
 	
 	
@@ -119,19 +168,49 @@ function poi(){
     //console.log( 'timeupdate');
 	//console.log( this );
 	//console.log( this.ended ,this.paused , this.readyState  );
+	//var vv=$(this);
+	//console.log( vv );
+	//if(vv.length==0){return;}
+	var cc=0;
+    if(vv[0].ended){cc=cc+1;}//console.log( 'ended' );
+    if(vv[0].paused){cc=cc+1;}//console.log( 'paused' );
+	//播完或暫停就手動更新canvas
+	if(cc>0){
+	  //drawVideo();
+	  ctx.drawImage(vid,0,0,canvas.width,canvas.height);
+	}
+
+	
   });
 
   
   function drawVideo(){
+    //var [vv]=in1;
     //console.log( 'drawVideo' );
-	ctx.drawImage(vid,0,0,canvas.width,canvas.height);
-	$('#input_video2').text( vid.currentTime +'/'+ vid.duration );//時間軸
-	var aa=$('#input_video');
+	//
+	ctx.drawImage(vid,0,0,canvas.width,canvas.height);//更新canvas
+	//
+	FFF='';
+	FFF=Number.parseFloat(vid.currentTime).toFixed(3);
+	$('#input_video2a').text( FFF );//時間軸
+
+	//var aa=$('#input_video');
+	//var vv=$(this);
 	//console.log( aa[0].readyState  );
 	//console.log( aa[0].ended ,aa[0].paused , aa[0].readyState  );
-    //if(aa[0].ended){console.log( 'ended' );return;}
-	//if(aa[0].paused){console.log( 'paused' );return;}
-	requestAnimationFrame(drawVideo);//由瀏覽器控制FPS
+	//if(vv.length==0){return;}
+	var cc=0;
+    if(vv[0].ended){cc=cc+1;}//console.log( 'ended' );
+    if(vv[0].paused){cc=cc+1;}//console.log( 'paused' );
+	//播完或暫停就取消迴圈
+	if(cc>0){
+	  return;
+	}
+	var FFF=window.performance.now();//效能api
+	FFF=Number.parseFloat(FFF).toFixed(3);
+	$('#input_video3').text( FFF );
+	//console.log( 'requestAnimationFrame' );
+	window.requestAnimationFrame(drawVideo);//由瀏覽器控制FPS
   }//drawVideo()
 
 return 123;
@@ -391,9 +470,12 @@ canvas {
 
 <video id="input_video" style="width:auto;height:auto;" controls preload="metadata"  >
 </video>
-<poi id="input_video2">input_video</poi>
+<poi id="input_video2a">input_video2a</poi>
+/
+<poi id="input_video2b">input_video2b</poi>
 <br/>
-
+<poi id="input_video3">input_video3</poi>
+<br/>
 
 
 
